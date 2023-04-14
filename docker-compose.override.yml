@@ -2,9 +2,9 @@ version: '3'
 
 services:
 ###> doctrine/doctrine-bundle ###
-  database:
+  psql:
     ports:
-      - "5432"
+      - "54321:5432"
 ###< doctrine/doctrine-bundle ###
 
 ###> symfony/mailer ###

@@ -22,3 +22,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\EventListener\PostEntitySubscriber:
+        tags:
+            - name: 'doctrine.event_subscriber'
+
+    App\Command\SendAnalyticsEventCommand:
+        arguments:
+            $analyticServiceUrl: '%env(string:ANALYTICS_SERVICE_URL)%'

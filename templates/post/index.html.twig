@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post index{% endblock %}
+
+{% block body %}
+    <h1>Post index</h1>
+    <div>
+        {% for post in posts %}
+            <h2>{{ post.title }}</h2>
+            {{ post.text }}
+        {% else %}
+            no records found
+        {% endfor %}
+    </div>
+
+    {% if is_granted('ROLE_AUTHOR') %}
+        <a href="{{ path('app_post_new') }}">Create new</a>
+    {% endif %}
+
+{% endblock %}
