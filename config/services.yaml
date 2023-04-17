@@ -27,6 +27,6 @@ services:
         tags:
             - name: 'doctrine.event_subscriber'
 
-    App\Command\SendAnalyticsEventCommand:
+    App\MessageHandler\AnalyticsServiceMessageHandler:
         arguments:
             $analyticServiceUrl: '%env(string:ANALYTICS_SERVICE_URL)%'

@@ -8,3 +8,6 @@ build:
 
 run_analytics_service:
 	go run analytics_service/main.go
+
+consume_messages:
+	echo 0 | php bin/console messenger:consume

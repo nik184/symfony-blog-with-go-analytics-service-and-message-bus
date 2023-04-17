@@ -3,12 +3,13 @@
 namespace App\EventListener;
 
 use App\Entity\Post;
+use App\Message\AnalyticsServiceMessage;
 use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
 use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Event\PostRemoveEventArgs;
 use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Events;
-use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class PostEntitySubscriber implements EventSubscriberInterface
 {
@@ -23,7 +24,7 @@ class PostEntitySubscriber implements EventSubscriberInterface
     ];
 
     public function __construct(
-        private readonly KernelInterface $kernel
+        private readonly MessageBusInterface $bus
     )
     {
     }
@@ -75,8 +76,8 @@ class PostEntitySubscriber implements EventSubscriberInterface
             "action" => $action,
         ];
 
-        $dir = $this->kernel->getProjectDir();
         $data = json_encode($requestBody);
-        `php $dir/bin/console app:send-analytics-event '$data' >> /dev/null`;
+
+        $this->bus->dispatch(new AnalyticsServiceMessage($data));
     }
 }
